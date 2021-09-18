@@ -1,0 +1,20 @@
+version: '3'
+services:
+  sr-gen2:
+    container_name: sr-gen2
+    build: ./
+    restart: on-failure
+    ports:
+      - 8082:8082
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: tcp://host.docker.internal:24224
+    networks:
+      - sr-gen2
+
+
+networks:
+  sr-gen2:
+    driver: bridge
+    attachable: true

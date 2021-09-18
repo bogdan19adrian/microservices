@@ -1,0 +1,38 @@
+version: "3"
+services:
+
+  fluentd:
+    build: ./
+    links:
+      - "elasticsearch"
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    networks:
+      - monitor
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+    container_name: elasticsearch
+    environment:
+      - "discovery.type=single-node"
+    expose:
+      - "9200"
+    ports:
+      - "9200:9200"
+    networks:
+      - monitor
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.14.1
+    links:
+      - "elasticsearch"
+    ports:
+      - "5601:5601"
+    networks:
+      - monitor
+
+networks:
+  monitor:
+    driver: bridge
+    attachable: true
