@@ -1,0 +1,20 @@
+version: '3'
+services:
+  discovery-server:
+    container_name: discovery-server
+    build: ..
+    restart: on-failure
+    ports:
+      - 8081:8081
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: tcp://host.docker.internal:24224
+    networks:
+      - sr-gen1
+
+
+networks:
+  sr-gen1:
+    driver: bridge
+    attachable: true
