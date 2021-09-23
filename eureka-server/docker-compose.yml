@@ -11,10 +11,10 @@ services:
       options:
         fluentd-address: tcp://host.docker.internal:24224
     networks:
-      - sr-gen1
+      - discovery-server
 
 
 networks:
-  sr-gen1:
+  discovery-server:
     driver: bridge
     attachable: true
